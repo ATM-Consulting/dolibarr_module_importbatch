@@ -37,7 +37,7 @@ switch ($action) {
 		$filename = GETPOST('CSVFile', 'alpha');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
-			$TLog = ecGetBatchSerialFromCSV(
+			$TLog = ibGetBatchSerialFromCSV(
 				$db,
 				$filePath,
 				GETPOST('srcEncoding', 'alpha'),

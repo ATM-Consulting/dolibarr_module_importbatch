@@ -29,7 +29,7 @@ require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
  * @param string $importKey
  * @return array|null  Array with
  */
-function ecGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot') {
+function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot') {
 
 	/*
 	Import / lot série (création et mise à jour des stocks et mouvements).
@@ -57,7 +57,7 @@ function ecGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		if ($i === 0) continue; // skip header row
 
 		try {
-			$objProduct = ecValidateCSVLine($i, $csvValues);
+			$objProduct = ibValidateCSVLine($i, $csvValues);
 		} catch (ErrorException $e) {
 			$TImportLog[] = newImportLogLine('error', $e->getMessage());
 			$errors++;
@@ -83,7 +83,7 @@ function ecGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		foreach ($TLineValidated as $k => $line){
 			try {
 				//  create mouvement
-				$successMessage = ecRegisterLotBatch($line, $k+1);
+				$successMessage = ibRegisterLotBatch($line, $k+1);
 				$TImportLog[] = newImportLogLine('info', $successMessage);
 			} catch (ErrorException $e) {
 				$TImportLog[] = newImportLogLine('error', $e->getMessage());
@@ -129,7 +129,7 @@ function parseNumberFromCSV($value, $type) {
  * @return object  Object representing the parsed CSV line
  * @throws ErrorException
  */
-function ecValidateCSVLine($lineNumber, $lineArray) {
+function ibValidateCSVLine($lineNumber, $lineArray) {
 	global $db, $langs;
 
 	$TFieldName = array(
@@ -473,7 +473,7 @@ function no_dupes(array $input_array) {
  * @param $importKey
  * @return void
  */
-function ecRegisterLotBatch($objProduct,$lineNumber) {
+function ibRegisterLotBatch($objProduct, $lineNumber) {
 	global $db, $langs,$user;
 
 	$type 			= 3; // augmentation du stock
