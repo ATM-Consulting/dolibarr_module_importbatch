@@ -2,11 +2,21 @@
 
 ## Features
 
-Description of the module...
+### Import bash into dolibarr bdd.
 
-<!--
-![Screenshot importbatch](img/screenshot_importbatch.png?raw=true "ImportBatch"){imgmd}
--->
+
+
+
+
+**When module is activated**, the feature is accessible from main top menu "Tools" then 
+en left menu an item redirect you to import batch
+
+![Screenshot importbatch](img/import-batch-02.png?raw=true "ImportBatch"){imgmd}
+
+An **example csv file** is provided on help section page.
+
+![Screenshot importbatch](img/import-batch-01.png?raw=true "ImportBatch"){imgmd}
+
 
 Other external modules are available on [Dolistore.com](https://www.dolistore.com).
 
