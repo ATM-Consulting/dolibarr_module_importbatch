@@ -301,7 +301,7 @@ class modImportBatch extends DolibarrModules
 		/* END MODULEBUILDER TOPMENU */
 
 
-
+		/* BEGIN MODULEBUILDER IMPORT  */
 		$r =1;
 		$this->import_code[$r] = $this->rights_class.'_'.$r;
 		$this->import_label[$r] = "Importbatch"; // Translation key
@@ -312,13 +312,12 @@ class modImportBatch extends DolibarrModules
 			'e.ref' => "refwarehouse",
 			"pb.qty"=>"qty",
 			'pl.batch' => "batch");
-		// field order as per structure of table llx_product
 		$this->import_examplevalues_array[$r] = array(
 			'p.ref' => "PREF123456",
 			'e.ref' => "ENT A",
 			"pb.qty"=>"5",
 			'pl.batch' => "B45DF111E");
-		/* END MODULEBUILDER IMPORT MYOBJECT */
+		/* END MODULEBUILDER IMPORT  */
 	}
 
 	/**
