@@ -291,7 +291,7 @@ class modImportBatch extends DolibarrModules
 			'titre'=>$langs->trans('ibImportProducts'),
 			'mainmenu'=>'importbatch',
 			'leftmenu'=>'importbatch_left',			// Goes into left menu previously created by the mainmenu
-			'url'=>'/importbatch/product_import.php?datatoimport=Importbatch',
+			'url'=>'/importbatch/batch_import.php?datatoimport=Importbatch',
 			'langs'=>'importbatch@importbatch',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>100,
 			'enabled'=>'$conf->importbatch->enabled',  // Define condition to show or hide menu entry. Use '$conf->cliaufildesmatieres->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
