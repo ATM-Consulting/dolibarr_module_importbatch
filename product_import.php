@@ -106,10 +106,20 @@ function showImportForm() {
 }
 
 function showHelp() {
+
 	global $langs;
+
+	$key="csv";
+	$param="&datatoimport=importbatch_1";
 	?>
 	<details class="ib" id="ibImportExplanation">
 		<summary><h2><?php print $langs->trans("help"); ?></h2></summary>
+		<hr>
+		<h3>
+		<p>
+			<?php print img_picto('', 'download', 'class="paddingright opacitymedium"').'<a href="'.DOL_URL_ROOT.'/imports/emptyexample.php?format='.$key.$param.'" target="_blank">'.$langs->trans("DownloadEmptyExample").'</a>'; ?>
+		</p>
+		</h3>
 		<hr>
 		<h3><?php print $langs->trans("Columns"); ?></h3>
 		<table class="ib help-table">
@@ -140,10 +150,6 @@ function showHelp() {
 			<li><?php print $langs->trans("StringSeparatorsubTitle"); ?></li>
 			<li><?php print $langs->trans("EOLsubTitle"); ?></li>
 		</ul>
-		<p><?php print $langs->trans("CaseOfEmergency"); ?>
-			<a href="<?php echo dol_buildpath('/importbatch/samples/ib_import.csv', 1) ?>">
-				ib_import.csv
-			</a></p>
 	</details>
 	<?php
 }

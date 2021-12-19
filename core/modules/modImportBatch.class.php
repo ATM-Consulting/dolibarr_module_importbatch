@@ -291,7 +291,7 @@ class modImportBatch extends DolibarrModules
 			'titre'=>$langs->trans('ibImportProducts'),
 			'mainmenu'=>'importbatch',
 			'leftmenu'=>'importbatch_left',			// Goes into left menu previously created by the mainmenu
-			'url'=>'/importbatch/product_import.php',
+			'url'=>'/importbatch/product_import.php?datatoimport=Importbatch',
 			'langs'=>'importbatch@importbatch',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>100,
 			'enabled'=>'$conf->importbatch->enabled',  // Define condition to show or hide menu entry. Use '$conf->cliaufildesmatieres->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
@@ -299,100 +299,25 @@ class modImportBatch extends DolibarrModules
 			'target'=>'',
 			'user'=>0);				                // 0=Menu for internal users, 1=external users, 2=both
 		/* END MODULEBUILDER TOPMENU */
-		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
-		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=importbatch',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'left',                          // This is a Top menu entry
-			'titre'=>'MyObject',
-			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-			'mainmenu'=>'importbatch',
-			'leftmenu'=>'myobject',
-			'url'=>'/importbatch/importbatchindex.php',
-			'langs'=>'importbatch@importbatch',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000+$r,
-			'enabled'=>'$conf->importbatch->enabled',  // Define condition to show or hide menu entry. Use '$conf->importbatch->enabled' if entry must be visible if module is enabled.
-			'perms'=>'$user->rights->importbatch->myobject->read',			                // Use 'perms'=>'$user->rights->importbatch->level1->level2' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-		);
-		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=importbatch,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'List_MyObject',
-			'mainmenu'=>'importbatch',
-			'leftmenu'=>'importbatch_myobject_list',
-			'url'=>'/importbatch/myobject_list.php',
-			'langs'=>'importbatch@importbatch',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000+$r,
-			'enabled'=>'$conf->importbatch->enabled',  // Define condition to show or hide menu entry. Use '$conf->importbatch->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->importbatch->myobject->read',			                // Use 'perms'=>'$user->rights->importbatch->level1->level2' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-		);
-		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=importbatch,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'New_MyObject',
-			'mainmenu'=>'importbatch',
-			'leftmenu'=>'importbatch_myobject_new',
-			'url'=>'/importbatch/myobject_card.php?action=create',
-			'langs'=>'importbatch@importbatch',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000+$r,
-			'enabled'=>'$conf->importbatch->enabled',  // Define condition to show or hide menu entry. Use '$conf->importbatch->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->importbatch->myobject->write',			                // Use 'perms'=>'$user->rights->importbatch->level1->level2' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-		);
-		END MODULEBUILDER LEFTMENU MYOBJECT */
-		// Exports profiles provided by this module
-		$r = 1;
-		/* BEGIN MODULEBUILDER EXPORT MYOBJECT */
-		/*
-		$langs->load("importbatch@importbatch");
-		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		$this->export_icon[$r]='myobject@importbatch';
-		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
-		$keyforclass = 'MyObject'; $keyforclassfile='/importbatch/class/myobject.class.php'; $keyforelement='myobject@importbatch';
-		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
-		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
-		//$keyforclass = 'MyObjectLine'; $keyforclassfile='/importbatch/class/myobject.class.php'; $keyforelement='myobjectline@importbatch'; $keyforalias='tl';
-		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@importbatch';
-		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='myobjectline'; $keyforaliasextra='extraline'; $keyforelement='myobjectline@importbatch';
-		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$this->export_dependencies_array[$r] = array('myobjectline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
-		//$this->export_special_array[$r] = array('t.field'=>'...');
-		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
-		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
-		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'myobject_line as tl ON tl.fk_myobject = t.rowid';
-		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
-		$r++; */
-		/* END MODULEBUILDER EXPORT MYOBJECT */
 
-		// Imports profiles provided by this module
-		$r = 1;
-		/* BEGIN MODULEBUILDER IMPORT MYOBJECT */
-		/*
-		 $langs->load("importbatch@importbatch");
-		 $this->export_code[$r]=$this->rights_class.'_'.$r;
-		 $this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		 $this->export_icon[$r]='myobject@importbatch';
-		 $keyforclass = 'MyObject'; $keyforclassfile='/importbatch/class/myobject.class.php'; $keyforelement='myobject@importbatch';
-		 include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		 $keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@importbatch';
-		 include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		 //$this->export_dependencies_array[$r]=array('mysubobject'=>'ts.rowid', 't.myfield'=>array('t.myfield2','t.myfield3')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
-		 $this->export_sql_start[$r]='SELECT DISTINCT ';
-		 $this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
-		 $this->export_sql_end[$r] .=' WHERE 1 = 1';
-		 $this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
-		 $r++; */
+
+
+		$r =1;
+		$this->import_code[$r] = $this->rights_class.'_'.$r;
+		$this->import_label[$r] = "Importbatch"; // Translation key
+		$this->import_icon[$r] = $this->picto;
+		// for example csv file
+		$this->import_fields_array[$r] = array(
+			'p.ref' => "refproduct",
+			'e.ref' => "refwarehouse",
+			"pb.qty"=>"qty",
+			'pl.batch' => "batch");
+		// field order as per structure of table llx_product
+		$this->import_examplevalues_array[$r] = array(
+			'p.ref' => "PREF123456",
+			'e.ref' => "ENT A",
+			"pb.qty"=>"5",
+			'pl.batch' => "B45DF111E");
 		/* END MODULEBUILDER IMPORT MYOBJECT */
 	}
 

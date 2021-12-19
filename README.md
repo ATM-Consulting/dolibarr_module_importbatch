@@ -15,7 +15,7 @@ en left menu an item redirect you to import batch
 
 An **example csv file** is provided on help section page.
 
-![Screenshot importbatch](img/import-batch-01.png?raw=true "ImportBatch"){imgmd}
+![Screenshot importbatch](img/import-batch-03.png?raw=true "ImportBatch"){imgmd}
 
 
 Other external modules are available on [Dolistore.com](https://www.dolistore.com).

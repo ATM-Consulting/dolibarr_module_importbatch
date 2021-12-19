@@ -108,16 +108,19 @@ refQtyTitle=Qty
 refBatchTitle=Lots / Séries
 TechDescCsvTitle=Caractéristiques techniques du CSV
 NumbersubTitle=Nombres:
-Numbersub-1=décimales séparées par une virgule (4,8 ≠ <s>4.8</s>)
+Numbersub-1=décimales séparées par un point (4.8 ≠ <s>4,8</s>)
 Numbersub-2=sans unité (175 ≠ 175cm)
 Numbersub-3=sans séparateur de milliers (30000 ≠ 30 000 ou 30,000)
 EncodeCharsSubTitle=Encodage du jeu de caractères
 EncodeCharsSubTitle-2=à sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués<br>(comme, "crativit" ou "crÃ©ativitÃ©" au lieu de "créativité").<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
-FieldSeparatorsubTitle=<b>Séparateur de champs</b> : point-virgule (<span class="character">;</span>)
+FieldSeparatorsubTitle=<b>Séparateur de champs</b> :virgule (<span class="character">,</span>)
 StringSeparatorsubTitle=<b>Séparateur de chaînes de caractères</b> : double-quote (<span class="character">"</span>)
 EOLsubTitle=<b>Fin de ligne</b> : type Windows (CRLF)
-CaseOfEmergency=En cas de doute, utilisez cet exemple :
 help=Aide
 errors=Des erreurs se sont produites
 importDone=Import terminé
-
+DownloadEmptyExample=Télécharger le fichier d'exemple
+refproduct=Référence produit
+refwarehouse=Référence entrepôt
+batch=lot/série
+qty=Quantité
