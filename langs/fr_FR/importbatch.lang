@@ -78,7 +78,7 @@ NoSerialBatchError=Ligne %s : Pas de num Lot/serie.
 productImportTitle=Import de lots/séries
 SubmitCSVForImport=importer le fichier dans dolibarr
 ibImportProducts=Import de lots/séries
-addStockFromBatchSerial="Augmentation du stock par import lots/séries
+addStockFromBatchSerial=Augmentation du stock par import lots/séries
 isEmpty=est vide
 notFound=n'a pas été trouvée
 

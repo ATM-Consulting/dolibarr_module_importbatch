@@ -25,16 +25,9 @@ $langs->load('importbatch@importbatch');
 
 $action = GETPOST('action');
 
-
-llxHeader('<link rel="stylesheet" href="' . dol_buildpath('/importbatch/css/ib.css', 1) . '" />');
-$form = new Form($db);
-print_barre_liste($langs->trans("productImportTitle"), 0, $_SERVER["PHP_SELF"], '', '', '', '', 0, -1, '', 0, '', '', 0, 1, 1
-);
-
-
 switch ($action) {
 	case 'importCSV':
-		$filename = GETPOST('CSVFile', 'alpha');
+		$filename = GETPOST('CSVF$actionile', 'alpha');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
 			$TLog = ibGetBatchSerialFromCSV(
@@ -51,14 +44,23 @@ switch ($action) {
 			}
 			echo '<table class="ib import-log">';
 			$lineNumber = 1;
+
 			foreach ($TLog as $logLine) {
-				echo '<tr class="log-' . $logLine['type'] . '"><td>' . $logLine['msg'] . '</td></tr>';
+
+				$typeMsg ="mesgs";
+				if ($logLine['type'] == 'error' ){
+					$typeMsg ="errors";
+				}
+				setEventMessage($logLine['msg'],$typeMsg);
 			}
-			echo '</table>';
-			echo '</details>';
-			echo '<hr/>';
+			header('Location: '.$_SERVER['PHP_SELF']);
+			exit;
+
 		}
 	default:
+		llxHeader('<link rel="stylesheet" href="' . dol_buildpath('/importbatch/css/ib.css', 1) . '" />');
+		$form = new Form($db);
+		print_barre_liste($langs->trans("productImportTitle"), 0, $_SERVER["PHP_SELF"], '', '', '', '', 0, -1, '', 0, '', '', 0, 1, 1);
 		showImportForm();
 		showHelp();
 }
@@ -99,8 +101,7 @@ function showImportForm() {
 			?>
 		</select>
 		<br/>
-		<input type="submit" class="button" name="save"
-			   value="<?php echo $langs->trans("SubmitCSVForImport") ?>" />
+		<input type="submit" class="button" name="save" value="<?php echo $langs->trans("SubmitCSVForImport") ?>" />
 	</form>
 	<?php
 }

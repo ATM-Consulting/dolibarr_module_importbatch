@@ -45,7 +45,7 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 	$csvFile = fopen($filePath, 'r');
 
 	$db->begin();
-	for ($i = 0; $csvValues = fgetcsv($csvFile, '64000', ";", '"'); $i++) {
+	for ($i = 0; $csvValues = fgetcsv($csvFile, '64000', ",", '"'); $i++) {
 		$csvValues = array_map(
 			function ($val) use ($srcEncoding) {
 				if ($srcEncoding === 'UTF-8') return trim($val);
@@ -53,11 +53,12 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 			},
 			$csvValues
 		);
+		$TcsvLine = $csvValues;
 		if (empty(implode('', $csvValues))) continue;
 		if ($i === 0) continue; // skip header row
 
 		try {
-			$objProduct = ibValidateCSVLine($i, $csvValues);
+			$objProduct = ibValidateCSVLine($i, $TcsvLine);
 		} catch (ErrorException $e) {
 			$TImportLog[] = newImportLogLine('error', $e->getMessage());
 			$errors++;
@@ -132,12 +133,7 @@ function parseNumberFromCSV($value, $type) {
 function ibValidateCSVLine($lineNumber, $lineArray) {
 	global $db, $langs;
 
-	$TFieldName = array(
-		'ref_product'            => 'text',   // llx_product
-		'ref_warehouse'          => 'text',   // llx_entrepot
-		'qty'                  	 => 'double',
-		'batch'             	 => 'text',   // llx_product_batch / product_lot
-	);
+	$TFieldName = array('ref_product', 'ref_warehouse','qty', 'batch');
 	$arrayProduct = array();
 
 	$ref_product = $lineArray[0];
