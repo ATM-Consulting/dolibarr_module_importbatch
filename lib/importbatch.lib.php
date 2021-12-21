@@ -332,7 +332,7 @@ function validateQty($qty, $langs,Product $p, $lineNumber)
 	global $conf;
 	$value = parseNumberFromCSV($qty, "int");
 	// valeur null ou inférieur à zéro sur un lot
-	if (($value === null || $value < 1 ) && $p->status_batch == 1 ) {
+	if ((empty($value)  || $value < 1 ) && $p->status_batch == 1 ) {
 		throw new ErrorException($langs->trans(
 			'NumberExpectedError',
 			$lineNumber + 1,
