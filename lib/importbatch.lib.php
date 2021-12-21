@@ -80,11 +80,12 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		}
 
 
+		$date_import = dol_print_date(dol_now(), '%Y%m%d%H%M%S');
 		// on injecte les données en bases
 		foreach ($TLineValidated as $k => $line){
 			try {
 				//  create mouvement
-				$successMessage = ibRegisterLotBatch($line, $k+1);
+				$successMessage = ibRegisterLotBatch($line, $k+1, $date_import);
 				$TImportLog[] = newImportLogLine('info', $successMessage);
 			} catch (ErrorException $e) {
 				$TImportLog[] = newImportLogLine('error', $e->getMessage());
@@ -478,7 +479,7 @@ function no_dupes(array $input_array) {
  * @param $importKey
  * @return void
  */
-function ibRegisterLotBatch($objProduct, $lineNumber) {
+function ibRegisterLotBatch($objProduct, $lineNumber, $date_import) {
 	global $db, $langs,$user;
 
 	$type 			= 3; // augmentation du stock
@@ -493,7 +494,7 @@ function ibRegisterLotBatch($objProduct, $lineNumber) {
 		$type,
 		0,
 		$langs->trans('addStockFromBatchSerial'),
-		"",
+		$date_import,
 		"",
 		"",
 		"",
