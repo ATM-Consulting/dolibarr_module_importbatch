@@ -158,8 +158,8 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
 	}
 	//warehouse
 	try {
-		$arrayProduct['id_warehouse'] = validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber);
-		$arrayProduct['ref_warehouse'] = getRefWarehouse($db, $arrayProduct['id_warehouse']);
+		list($arrayProduct['id_warehouse'], $arrayProduct['ref_warehouse']) = validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber);
+//		$arrayProduct['ref_warehouse'] = getRefWarehouse($db, $arrayProduct['id_warehouse']);
 
 	}catch( ErrorException $e){
 		throw $e;
@@ -185,7 +185,7 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
  * @param array $arrayProduct
  * @return array
  */
-function getRefWarehouse($db, $idWarehouse)
+/*function getRefWarehouse($db, $idWarehouse)
 {
 	$e = new Entrepot($db);
 	$res = $e->fetch($idWarehouse);
@@ -193,7 +193,7 @@ function getRefWarehouse($db, $idWarehouse)
 		return  $e->ref;
 	}
 	return "no data";
-}
+}*/
 
 /**
  * @param array $lineArray
@@ -295,7 +295,17 @@ function validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber)
 				));
 
 			}else{
-				return $p->fk_default_warehouse;
+				$ent = new Entrepot($db);
+				$res = $ent->fetch($p->fk_default_warehouse);
+				if($res <= 0) {
+					throw new ErrorException($langs->trans(
+	                                        'RefProductdefaultWarehouseNotExistError',
+	                                        $lineNumber + 1,
+	                                        $p->ref,
+	                                        $p->fk_default_warehouse
+	                                ));
+				}
+				return array($p->fk_default_warehouse, $ent->ref);
 			}
 		}else{
 			throw new ErrorException($langs->trans(
@@ -307,7 +317,7 @@ function validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber)
 		}
 
 	}
-	return $e->id;
+	return array($e->id, $e->ref);
 }
 
 /**
