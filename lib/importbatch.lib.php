@@ -352,7 +352,7 @@ function validateQty($qty, $langs,Product $p, $lineNumber)
 
 	// conf qui permet de laisser la colonne qty vide sur un produit serialisé
 	// elle sera retournée à 1 par defaut.
-	if (($value === null && $p->status_batch == 2)){
+	if ((empty($value)  && $p->status_batch == 2)){
 		if (empty($conf->global->ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCT)){
 			throw new ErrorException($langs->trans(
 				'NumberEmptyError',
