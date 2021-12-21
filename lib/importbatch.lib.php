@@ -502,8 +502,9 @@ function ibRegisterLotBatch($objProduct, $lineNumber, $date_import) {
 
 	if ($resfetch < 0) {
 		throw new ErrorException($langs->trans(
-			'SupplierFetchError',
-			$objProduct->supplierRef,
+			'CreateStockMovementError',
+			$lineNumber,
+			$objProduct->ref_product,
 			$ms->error . '<br>' . $db->lasterror())
 		);
 	}
