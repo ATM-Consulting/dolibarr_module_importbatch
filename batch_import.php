@@ -19,7 +19,7 @@ require 'config.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/functions.lib.php';
 dol_include_once('importbatch/lib/importbatch.lib.php');
 
-if(empty($user->rights->produit->creer)) accessforbidden();
+if(empty($user->rights->produit->creer) || empty($user->rights->importbatch->importbatch->write)) accessforbidden();
 
 $langs->load('importbatch@importbatch');
 
