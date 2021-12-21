@@ -18,9 +18,9 @@
 #
 
 # Module label 'ModuleImportBatchName'
-ModuleImportBatchName = ImportBatch
+ModuleImportBatchName = Import des numéros de lots/série
 # Module description 'ModuleImportBatchDesc'
-ModuleImportBatchDesc = ImportBatch description
+ModuleImportBatchDesc = Import de fichiers CSV contenant numéros de lots/série
 
 #
 # Admin page
@@ -60,10 +60,11 @@ CSVLineNotEnoughColumns=le fichier csv ne contient pas le bon nombre de colonne.
 RefProductNotExistError=Ligne %s : la référence <b>%s</b> n'existe pas pour %s
 ProductTypeLotError=Ligne %s : le produit <b>%s</b> ne gère pas les lots/series
 ProductTypeServiceError=Ligne %s : le produit <b>%s</b> est du type service (pas de création de lot ou serie sur ce type )
-
+CreateStockMovementError=Ligne %s : erreur création mouvement de stock pour le produit <b>%s</b> : %s
 
 RefWarehouseDefaultNotExistError=Ligne %s : la référence entrepôt <b>%s</b> n'existe pas. Le produit <b>%s</b> n'a pas d'entrepôt par defaut pour s'y substitué.
 RefWarehouseNotExistError=Ligne %s : la référence entrepôt <b>%s</b>.
+RefProductdefaultWarehouseNotExistError=Ligne %s : L'entrepôt du produit %s ayant pour id %s n'existe pas
 
 NumberExpectedError =Ligne %s : la Qty <b>%s</b> n'est pas un numérique valide ou est inférieure à un.
 NumberEmptyError=Ligne %s : la Qty <b>%s</b> est vide.

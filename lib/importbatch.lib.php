@@ -80,11 +80,12 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		}
 
 
+		$date_import = dol_print_date(dol_now(), '%Y%m%d%H%M%S');
 		// on injecte les données en bases
 		foreach ($TLineValidated as $k => $line){
 			try {
 				//  create mouvement
-				$successMessage = ibRegisterLotBatch($line, $k+1);
+				$successMessage = ibRegisterLotBatch($line, $k+1, $date_import);
 				$TImportLog[] = newImportLogLine('info', $successMessage);
 			} catch (ErrorException $e) {
 				$TImportLog[] = newImportLogLine('error', $e->getMessage());
@@ -136,13 +137,12 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
 	$TFieldName = array('ref_product', 'ref_warehouse','qty', 'batch');
 	$arrayProduct = array();
 
-	$ref_product = $lineArray[0];
-	$arrayProduct['ref_product'] = $lineArray[0];
-	$ref_entrepot = $lineArray[1];
-	$arrayProduct['ref_warehouse'] = $lineArray[1];
+	$ref_product = trim($lineArray[0]);
+	$arrayProduct['ref_product'] = trim($lineArray[0]);
+	$ref_entrepot = trim($lineArray[1]);
+	$arrayProduct['ref_warehouse'] = trim($lineArray[1]);
 	$qty = $lineArray[2];
-	$batch = $lineArray[3];
-
+	$batch = trim($lineArray[3]);
 
 	//nb Columns
 	try {
@@ -159,8 +159,8 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
 	}
 	//warehouse
 	try {
-		$arrayProduct['id_warehouse'] = validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber);
-		$arrayProduct['ref_warehouse'] = getRefWarehouse($db, $arrayProduct['id_warehouse']);
+		list($arrayProduct['id_warehouse'], $arrayProduct['ref_warehouse']) = validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber);
+//		$arrayProduct['ref_warehouse'] = getRefWarehouse($db, $arrayProduct['id_warehouse']);
 
 	}catch( ErrorException $e){
 		throw $e;
@@ -186,7 +186,7 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
  * @param array $arrayProduct
  * @return array
  */
-function getRefWarehouse($db, $idWarehouse)
+/*function getRefWarehouse($db, $idWarehouse)
 {
 	$e = new Entrepot($db);
 	$res = $e->fetch($idWarehouse);
@@ -194,7 +194,7 @@ function getRefWarehouse($db, $idWarehouse)
 		return  $e->ref;
 	}
 	return "no data";
-}
+}*/
 
 /**
  * @param array $lineArray
@@ -296,7 +296,17 @@ function validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber)
 				));
 
 			}else{
-				return $p->fk_default_warehouse;
+				$ent = new Entrepot($db);
+				$res = $ent->fetch($p->fk_default_warehouse);
+				if($res <= 0) {
+					throw new ErrorException($langs->trans(
+	                                        'RefProductdefaultWarehouseNotExistError',
+	                                        $lineNumber + 1,
+	                                        $p->ref,
+	                                        $p->fk_default_warehouse
+	                                ));
+				}
+				return array($p->fk_default_warehouse, $ent->ref);
 			}
 		}else{
 			throw new ErrorException($langs->trans(
@@ -308,7 +318,7 @@ function validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber)
 		}
 
 	}
-	return $e->id;
+	return array($e->id, $e->ref);
 }
 
 /**
@@ -323,7 +333,7 @@ function validateQty($qty, $langs,Product $p, $lineNumber)
 	global $conf;
 	$value = parseNumberFromCSV($qty, "int");
 	// valeur null ou inférieur à zéro sur un lot
-	if (($value === null || $value < 1 ) && $p->status_batch == 1 ) {
+	if ((empty($value)  || $value < 1 ) && $p->status_batch == 1 ) {
 		throw new ErrorException($langs->trans(
 			'NumberExpectedError',
 			$lineNumber + 1,
@@ -343,7 +353,7 @@ function validateQty($qty, $langs,Product $p, $lineNumber)
 
 	// conf qui permet de laisser la colonne qty vide sur un produit serialisé
 	// elle sera retournée à 1 par defaut.
-	if (($value === null && $p->status_batch == 2)){
+	if ((empty($value)  && $p->status_batch == 2)){
 		if (empty($conf->global->ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCT)){
 			throw new ErrorException($langs->trans(
 				'NumberEmptyError',
@@ -389,7 +399,7 @@ function validateLotSerie($batch, $langs, $lineNumber, array $arrayProduct, prod
 			$lineNumber + 1
 		));
 	}
-	// lot
+	// serial
 	if ($p->status_batch == 2){
 		// test if serial already exist
 		$sql = "SELECT * FROM " . MAIN_DB_PREFIX . "product_lot WHERE fk_product = " . $arrayProduct['id_product'] . " and batch = '" . $batch . "'";
@@ -469,7 +479,7 @@ function no_dupes(array $input_array) {
  * @param $importKey
  * @return void
  */
-function ibRegisterLotBatch($objProduct, $lineNumber) {
+function ibRegisterLotBatch($objProduct, $lineNumber, $date_import) {
 	global $db, $langs,$user;
 
 	$type 			= 3; // augmentation du stock
@@ -484,7 +494,7 @@ function ibRegisterLotBatch($objProduct, $lineNumber) {
 		$type,
 		0,
 		$langs->trans('addStockFromBatchSerial'),
-		"",
+		$date_import,
 		"",
 		"",
 		"",
@@ -492,8 +502,9 @@ function ibRegisterLotBatch($objProduct, $lineNumber) {
 
 	if ($resfetch < 0) {
 		throw new ErrorException($langs->trans(
-			'SupplierFetchError',
-			$objProduct->supplierRef,
+			'CreateStockMovementError',
+			$lineNumber,
+			$objProduct->ref_product,
 			$ms->error . '<br>' . $db->lasterror())
 		);
 	}
