@@ -398,7 +398,7 @@ function validateLotSerie($batch, $langs, $lineNumber, array $arrayProduct, prod
 			$lineNumber + 1
 		));
 	}
-	// lot
+	// serial
 	if ($p->status_batch == 2){
 		// test if serial already exist
 		$sql = "SELECT * FROM " . MAIN_DB_PREFIX . "product_lot WHERE fk_product = " . $arrayProduct['id_product'] . " and batch = '" . $batch . "'";
