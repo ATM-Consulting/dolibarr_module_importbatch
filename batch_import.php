@@ -30,7 +30,6 @@ switch ($action) {
 		$filename = GETPOST('CSVF$actionile', 'alpha');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
-			//$_SESSION['TLog'];
 			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
 				$db,
 				$filePath,
