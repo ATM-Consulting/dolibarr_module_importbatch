@@ -136,13 +136,12 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
 	$TFieldName = array('ref_product', 'ref_warehouse','qty', 'batch');
 	$arrayProduct = array();
 
-	$ref_product = $lineArray[0];
-	$arrayProduct['ref_product'] = $lineArray[0];
+	$ref_product = trim($lineArray[0]);
+	$arrayProduct['ref_product'] = trim($lineArray[0]);
 	$ref_entrepot = $lineArray[1];
 	$arrayProduct['ref_warehouse'] = $lineArray[1];
 	$qty = $lineArray[2];
-	$batch = $lineArray[3];
-
+	$batch = trim($lineArray[3]);
 
 	//nb Columns
 	try {
