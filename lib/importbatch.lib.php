@@ -138,7 +138,7 @@ function ibValidateCSVLine($lineNumber, $lineArray) {
 
 	$ref_product = trim($lineArray[0]);
 	$arrayProduct['ref_product'] = trim($lineArray[0]);
-	$ref_entrepot = $lineArray[1];
+	$ref_entrepot = trim($lineArray[1]);
 	$arrayProduct['ref_warehouse'] = $lineArray[1];
 	$qty = $lineArray[2];
 	$batch = trim($lineArray[3]);
