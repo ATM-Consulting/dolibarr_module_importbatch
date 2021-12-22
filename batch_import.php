@@ -30,29 +30,22 @@ switch ($action) {
 		$filename = GETPOST('CSVF$actionile', 'alpha');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
-			$TLog = ibGetBatchSerialFromCSV(
+			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
 				$db,
 				$filePath,
 				GETPOST('srcEncoding', 'alpha'),
 				'ib' . date('Ymd')
 			);
 
-			if (count(array_filter($TLog, function ($logLine) { return $logLine['type'] === 'error'; }))) {
+			if (count(array_filter($_SESSION['TLog'], function ($logLine) { return $logLine['type'] === 'error'; }))) {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('Errors').'</h2></summary>';
 			} else {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('importDone').'</h2></summary>';
 			}
-			echo '<table class="ib import-log">';
+
 			$lineNumber = 1;
 
-			foreach ($TLog as $logLine) {
 
-				$typeMsg ="mesgs";
-				if ($logLine['type'] == 'error' ){
-					$typeMsg ="errors";
-				}
-				setEventMessage($logLine['msg'],$typeMsg);
-			}
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 
@@ -61,6 +54,18 @@ switch ($action) {
 		llxHeader('<link rel="stylesheet" href="' . dol_buildpath('/importbatch/css/ib.css', 1) . '" />');
 		$form = new Form($db);
 		print_barre_liste($langs->trans("productImportTitle"), 0, $_SERVER["PHP_SELF"], '', '', '', '', 0, -1, '', 0, '', '', 0, 1, 1);
+		if (isset($_SESSION['TLog'])){
+			$lineNumber = 1;
+			echo '<table class="ib import-log">';
+			foreach ($_SESSION['TLog'] as $logLine) {
+				echo '<tr class="log-' . $logLine['type'] . '"><td>' . (++$lineNumber) . '</td><td>' . $logLine['msg'] . '</td></tr>';
+			}
+			echo '</table>';
+			echo '</details>';
+			echo '<hr/>';
+			unset($_SESSION['TLog']);
+		}
+
 		showImportForm();
 		showHelp();
 }
