@@ -56,7 +56,7 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		$TcsvLine = $csvValues;
 		if (empty(implode('', $csvValues))) continue;
 
-		if ($i < $excludeline) continue; // skip headers rows
+		if ($i <= $excludeline) continue; // skip headers rows
 		if ($endatlinenb > 0 && $i > $endatlinenb ) continue; // skip footers rows
 
 		try {
