@@ -29,7 +29,7 @@ require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
  * @param string $importKey
  * @return array|null  Array with
  */
-function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot') {
+function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot',$excludeline,$endatlinenb = 0 ) {
 
 	/*
 	Import / lot série (création et mise à jour des stocks et mouvements).
@@ -55,7 +55,9 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		);
 		$TcsvLine = $csvValues;
 		if (empty(implode('', $csvValues))) continue;
-		if ($i === 0) continue; // skip header row
+
+		if ($i < $excludeline) continue; // skip headers rows
+		if ($endatlinenb > 0 && $i > $endatlinenb ) continue; // skip footers rows
 
 		try {
 			$objProduct = ibValidateCSVLine($i, $TcsvLine);
@@ -270,19 +272,28 @@ function validateProduct($db, $ref_product, $langs, $lineNumber)
 function validateWareHouse($db, $ref_entrepot, $p, $langs, $lineNumber)
 {
 	global $conf;
-// test entrepot exist
+	// test entrepot exist
 	$msg ="";
 	if (empty($ref_entrepot)){
-
 		$msg = " ".$langs->transnoentities("isEmpty");
 	}else{
 		$msg = " ".$langs->transnoentities("notFound");
 	}
 
+	// ref empty et conf défaut entrepôt non activée
+	if (empty($ref_entrepot) && empty($conf->global->SET_WAREHOUSE_DEFAULT_PRODUCT_ON_EMPTY_WAREHOUSE_COLUMN )){
+		throw new ErrorException($langs->trans(
+			'RefWarehouseEmptyError',
+			$lineNumber + 1,
+			$p->ref,
+			$p->fk_default_warehouse
+		));
+	}
+
 
 	$e = new Entrepot($db);
 	$res = $e->fetch('', $ref_entrepot);
-	// invalid warehouse or empty cell
+	// invalid warehouse
 	if ($res <= 0) {
 
 		if (!empty($conf->global->SET_WAREHOUSE_DEFAULT_PRODUCT_ON_EMPTY_WAREHOUSE_COLUMN)){

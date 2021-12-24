@@ -28,13 +28,17 @@ $action = GETPOST('action');
 switch ($action) {
 	case 'importCSV':
 		$filename = GETPOST('CSVF$actionile', 'alpha');
+		$excludeline = GETPOST('excludeline','int');
+		$endatlinenb = GETPOST('endatlinenb','int');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
 			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
 				$db,
 				$filePath,
 				GETPOST('srcEncoding', 'alpha'),
-				'ib' . date('Ymd')
+				'ib' . date('Ymd'),
+				$excludeline,
+				$endatlinenb
 			);
 
 			if (count(array_filter($_SESSION['TLog'], function ($logLine) { return $logLine['type'] === 'error'; }))) {
@@ -66,7 +70,7 @@ switch ($action) {
 			unset($_SESSION['TLog']);
 		}
 
-		showImportForm();
+		showImportForm($form);
 		showHelp();
 }
 // todo: mettre dans fonction show_form_create()
@@ -75,8 +79,9 @@ llxFooter();
 
 
 
-function showImportForm() {
+function showImportForm($form) {
 	global $langs;
+
 	$acceptedEncodings = array(
 		'UTF-8',
 		'latin1',
@@ -93,7 +98,7 @@ function showImportForm() {
 		<input type="hidden" name="token" value="<?php echo newToken() ?>" />
 
 		<input id="CSVFile" name="CSVFile" type="file" required />
-
+		<br/>
 		<br/>
 		<label for="srcEncoding">
 			<?php print $langs->trans('SelectFileEncoding'); ?>
@@ -105,6 +110,22 @@ function showImportForm() {
 			}
 			?>
 		</select>
+		<br/>
+		<br />
+		<label for="excludefirstline">
+
+		<?php
+
+			$startLine = GETPOSTISSET('excludeline') ? GETPOST('excludeline','int') : 3;
+			print $langs->trans('excludeline');
+			print '<input type="number" class="maxwidth50" name="excludeline" value="'.$startLine.'">-' ;
+			print $form->textwithpicto("", $langs->trans("SetThisValueTo2ToExcludeFirstLine"));
+			print '<input type="number" class="maxwidth50" name="endatlinenb" value='.GETPOST('endatlinenb','int').'>';
+		    print $form->textwithpicto("", $langs->trans("KeepEmptyToGoToEndOfFile"));
+		?>
+
+
+		<br/>
 		<br/>
 		<input type="submit" class="button" name="save" value="<?php echo $langs->trans("SubmitCSVForImport") ?>" />
 	</form>
@@ -137,10 +158,25 @@ function showHelp() {
 				<td><?php print $langs->trans("refWarehouseColumDesc"); ?></td>
 			</tr>
 			<tr><th><?php print $langs->trans("refQtyTitle"); ?></th>
-				<td><?php print $langs->trans("refQtyColumDesc"); ?></td>
+				<td>
+					<?php print $langs->trans("refQtyColumDesc"); ?>
+					<?php
+						if (version_compare(DOL_VERSION, '14.0', '>=')) {
+							print $langs->trans("refQtyColumDescv14");
+						}
+					?>
+				</td>
 			</tr>
 			<tr><th><?php print $langs->trans("refBatchTitle"); ?></th>
-				<td><?php print $langs->trans("refBatchColumDesc"); ?></td>
+				<td><?php print $langs->trans("refBatchColumDesc"); ?>
+					<?php
+					if (version_compare(DOL_VERSION, '14.0', '>=')) {
+						print $langs->trans("refBatchColumDescV14");
+					}
+					?>
+
+				</td>
+
 			</tr>
 		</table>
 		<h3><?php print $langs->trans("TechDescCsvTitle"); ?></h3>

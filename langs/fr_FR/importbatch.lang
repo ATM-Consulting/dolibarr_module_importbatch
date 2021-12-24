@@ -57,17 +57,17 @@ MyWidgetDescription = My widget description
 #
 CSVLineNotEnoughColumns=le fichier csv ne contient pas le bon nombre de colonne. En cas de doute téléchargez le csv exemple dans l'aide.
 
-RefProductNotExistError=Ligne %s : la référence <b>%s</b> n'existe pas pour %s
-ProductTypeLotError=Ligne %s : le produit <b>%s</b> ne gère pas les lots/series
-ProductTypeServiceError=Ligne %s : le produit <b>%s</b> est du type service (pas de création de lot ou serie sur ce type )
-CreateStockMovementError=Ligne %s : erreur création mouvement de stock pour le produit <b>%s</b> : %s
+RefProductNotExistError=Ligne %s : La référence <b>%s</b> n'existe pas pour %s
+ProductTypeLotError=Ligne %s : Le produit <b>%s</b> ne gère pas les lots/series
+ProductTypeServiceError=Ligne %s : Le produit <b>%s</b> est du type service (pas de création de lot ou serie sur ce type )
+CreateStockMovementError=Ligne %s : Erreur création mouvement de stock pour le produit <b>%s</b> : %s
 
-RefWarehouseDefaultNotExistError=Ligne %s : la référence entrepôt <b>%s</b> n'existe pas. Le produit <b>%s</b> n'a pas d'entrepôt par defaut pour s'y substitué.
-RefWarehouseNotExistError=Ligne %s : la référence entrepôt <b>%s</b>.
+RefWarehouseDefaultNotExistError=Ligne %s : La référence entrepôt <b>%s</b> n'existe pas. Le produit <b>%s</b> n'a pas d'entrepôt par defaut pour s'y substitué.
+RefWarehouseNotExistError=Ligne %s : La référence entrepôt <b>%s</b>.
 RefProductdefaultWarehouseNotExistError=Ligne %s : L'entrepôt du produit %s ayant pour id %s n'existe pas
 
-NumberExpectedError =Ligne %s : la Qty <b>%s</b> n'est pas un numérique valide ou est inférieure à un.
-NumberEmptyError=Ligne %s : la Qty <b>%s</b> est vide.
+NumberExpectedError =Ligne %s : La Quantité <b>%s</b> n'est pas un numérique valide ou est inférieure à un.
+NumberEmptyError=Ligne %s : La Quantité <b>%s</b> est vide.
 
 
 outNumberedForSerialError=Ligne %s : Le produit de la ligne est sérialisé. La qty <b>%s</b> pour cette ligne doit être égale à 1.
@@ -77,13 +77,13 @@ duplicateSerialOnimportedFile= Le fichier contient des Duplications de numéro d
 
 NoSerialBatchError=Ligne %s : Pas de num Lot/serie.
 productImportTitle=Import de lots/séries
-SubmitCSVForImport=importer le fichier dans dolibarr
+SubmitCSVForImport=Importer le fichier dans dolibarr
 ibImportProducts=Import de lots/séries
 addStockFromBatchSerial=Augmentation du stock par import lots/séries
 isEmpty=est vide
 notFound=n'a pas été trouvée
 
-CSVBatchSerialCreateSuccess=Ligne %s : le lot/serie <b>%s</b> pour le [ produit | entrepôt ] <b>%s</b> et Pour une qty de <b>%s</b>  a été ajouté en base de données
+CSVBatchSerialCreateSuccess=Ligne %s : Le lot/serie <b>%s</b> pour le [ produit | entrepôt ] <b>%s</b> et Pour une qty de <b>%s</b>  a été ajouté en base de données
 
 #
 # admin
@@ -99,12 +99,18 @@ ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCTTooltip=Donner la possibilité d'af
 PickCSVFile=Fichier à importer
 SelectFileEncoding=Sélection du type d'encodage
 Columns=Colonnes
-refProdColumDesc=Doit être la reférence d'un produit enregistré dans Dolibarr. les services ne sont pas pris en compte.
-refWarehouseColumDesc=Référence de l'entrepôt dans Dolibarr : <br><b>le module de configuration</b> donne la possibilité, si la colonne n'est pas renseignée, d'affecter l'entrepôt par defaut du produit s'il est configuré dans la fiche de ce dernier.<br>
-refQtyColumDesc=Quantité désirée pour ce lot/Serie.
-refBatchColumDesc=Numéro de lot/série à associé au produit. si le couple produit/lot existe il sera mis à jour sinon il sera créé<br>Si le produit est géré par num unique la qty doit être de 1 et le num unique ne doit pas déjà exister dans votre environnement.<br><b>le module de configuration</b> donne la possibilité de ne pas renseigner la qty pour qu'elle soit affectée automatiquement pendant le traitement si les conditions sont remplies.
+refProdColumDesc=Doit être la référence d'un produit enregistré dans Dolibarr. les services ne sont pas pris en compte.
+refWarehouseColumDesc=Référence de l'entrepôt dans Dolibarr :la colonne doit contenir une référence entrepôt valide <br>option : <br>  Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité, si la colonne n'est pas renseignée, d'affecter l'entrepôt par défaut du produit s'il est renseigné dans la fiche de ce dernier. Cette <b>option est disponible dans les paramètres du module via Accueil</b>, configuration, modules/applications.<br>
+refQtyColumDesc=Quantité désirée pour un lot/série.
+refQtyColumDescv14=Pour un numéro de série il sera obligatoire de renseigner la quantité à 1.<br>option : <br> Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité de ne pas renseigner la quantité pour qu'elle soit affectée automatiquement pendant le traitement si les conditions suivantes sont remplies : <br> - Le produit doit être du type sérialisé (vérifiez le type via la fiche produit)
+
+refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé<br>
+refBatchColumDescV14=Pour les numéros de série, la valeur de ce champ doit être unique.
+
+
 refProductTitle= Ref Produit
 refWarehouseTitle=Ref Entrepôt
+RefWarehouseEmptyError=Ligne %s : La colonne entrepôt est vide
 refQtyTitle=Qty
 refBatchTitle=Lots / Séries
 TechDescCsvTitle=Caractéristiques techniques du CSV
@@ -113,7 +119,7 @@ Numbersub-1=décimales séparées par un point (4.8 ≠ <s>4,8</s>)
 Numbersub-2=sans unité (175 ≠ 175cm)
 Numbersub-3=sans séparateur de milliers (30000 ≠ 30 000 ou 30,000)
 EncodeCharsSubTitle=Encodage du jeu de caractères
-EncodeCharsSubTitle-2=à sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués<br>(comme, "crativit" ou "crÃ©ativitÃ©" au lieu de "créativité").<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
+EncodeCharsSubTitle-2=à sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués<br>créativité au lieu de   ( "crÃ©ativitÃ©").<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
 FieldSeparatorsubTitle=<b>Séparateur de champs</b> :virgule (<span class="character">,</span>)
 StringSeparatorsubTitle=<b>Séparateur de chaînes de caractères</b> : double-quote (<span class="character">"</span>)
 EOLsubTitle=<b>Fin de ligne</b> : type Windows (CRLF)
@@ -125,3 +131,6 @@ refproduct=Référence produit
 refwarehouse=Référence entrepôt
 batch=lot/série
 qty=Quantité
+excludeline=Importer les lignes à la position (de - à)
+SetThisValueTo2ToExcludeFirstLine=Par exemple, fixez cette valeur à 3 pour exclure les 2 premières lignes.<br>Si les lignes d'en-tête ne sont pas exclues, cela donnera lieu à de multiples erreurs dans la Simulation d'Import
+KeepEmptyToGoToEndOfFile=Laissez ce champ vide pour aller jusqu'à la fin du fichier
