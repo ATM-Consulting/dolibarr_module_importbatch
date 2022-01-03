@@ -105,7 +105,7 @@ refQtyColumDesc=Quantité désirée pour un lot/série.
 refQtyColumDescv14=Pour un numéro de série il sera obligatoire de renseigner la quantité à 1.<br>
 
 refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé.<br>Pour les numéros de série, la valeur de ce champ doit être unique.
-refBatchColumDescV14=<br>Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité de ne pas renseigner la quantité pour qu'elle soit affectée automatiquement pendant le traitement si les conditions suivantes sont remplies : <br> - Le produit doit être du type sérialisé (vérifiez le type via la fiche produit)
+refBatchColumDescV14=<br>Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> a une configuration permettant de ne pas renseigner la quantité dans le fichier csv  pour qu'elle soit affectée automatiquement  pendant le traitmeent si la condition suivante est remplie : <br>  - Le produit doit être du type sérialisé.
 
 
 refProductTitle= Ref Produit
