@@ -45,7 +45,7 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 	$csvFile = fopen($filePath, 'r');
 
 	$db->begin();
-	for ($i = 0; $csvValues = fgetcsv($csvFile, '64000', ",", '"'); $i++) {
+	for ($i = 1; $csvValues = fgetcsv($csvFile, '64000', ",", '"'); $i++) {
 		$csvValues = array_map(
 			function ($val) use ($srcEncoding) {
 				if ($srcEncoding === 'UTF-8') return trim($val);
