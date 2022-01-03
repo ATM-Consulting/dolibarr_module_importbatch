@@ -60,7 +60,7 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		if ($endLine > 0 && $i > $endLine ) continue; // skip footers rows
 
 		try {
-			$objProduct = ibValidateCSVLine($i, $TcsvLine);
+			$objProduct = ibValidateCSVLine($i-1, $TcsvLine);
 		} catch (ErrorException $e) {
 			$TImportLog[] = newImportLogLine('error', $e->getMessage());
 			$errors++;
