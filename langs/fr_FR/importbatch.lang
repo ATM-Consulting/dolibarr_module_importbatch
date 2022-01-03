@@ -99,12 +99,12 @@ ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCTTooltip=Donner la possibilité d'af
 PickCSVFile=Fichier à importer
 SelectFileEncoding=Sélection du type d'encodage
 Columns=Colonnes
-refProdColumDesc=Doit être la référence d'un produit enregistré dans Dolibarr. les services ne sont pas pris en compte.
-refWarehouseColumDesc=Référence de l'entrepôt dans Dolibarr :la colonne doit contenir une référence entrepôt valide <br>option : <br>  Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité, si la colonne n'est pas renseignée, d'affecter l'entrepôt par défaut du produit s'il est renseigné dans la fiche de ce dernier. Cette <b>option est disponible dans les paramètres du module via Accueil</b>, configuration, modules/applications.<br>
+refProdColumDesc=Doit être la référence d'un produit enregistré dans Dolibarr. Les services ne sont pas pris en compte.
+refWarehouseColumDesc=Référence de l'entrepôt dans Dolibarr : la colonne doit contenir une référence entrepôt valide <br>option : <br>  Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité, si la colonne n'est pas renseignée, d'affecter l'entrepôt par défaut du produit s'il est renseigné dans la fiche de ce dernier. Cette option est disponible dans les paramètres du module via Accueil, configuration, modules/applications.<br>
 refQtyColumDesc=Quantité désirée pour un lot/série.
 refQtyColumDescv14=Pour un numéro de série il sera obligatoire de renseigner la quantité à 1.<br>
 
-refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé<br>Pour les numéros de série, la valeur de ce champ doit être unique.
+refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé.<br>Pour les numéros de série, la valeur de ce champ doit être unique.
 refBatchColumDescV14=<br>Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité de ne pas renseigner la quantité pour qu'elle soit affectée automatiquement pendant le traitement si les conditions suivantes sont remplies : <br> - Le produit doit être du type sérialisé (vérifiez le type via la fiche produit)
 
 
@@ -119,7 +119,7 @@ Numbersub-1=décimales séparées par un point (4.8 ≠ <s>4,8</s>)
 Numbersub-2=sans unité (175 ≠ 175cm)
 Numbersub-3=sans séparateur de milliers (30000 ≠ 30 000 ou 30,000)
 EncodeCharsSubTitle=Encodage du jeu de caractères
-EncodeCharsSubTitle-2=à sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués<br>créativité au lieu de   ( "crÃ©ativitÃ©").<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
+EncodeCharsSubTitle-2=À sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués.<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
 FieldSeparatorsubTitle=<b>Séparateur de champs</b> :virgule (<span class="character">,</span>)
 StringSeparatorsubTitle=<b>Séparateur de chaînes de caractères</b> : double-quote (<span class="character">"</span>)
 EOLsubTitle=<b>Fin de ligne</b> : type Windows (CRLF)
