@@ -116,8 +116,8 @@ refBatchTitle=Lots / Séries
 TechDescCsvTitle=Caractéristiques techniques du CSV
 NumbersubTitle=Nombres:
 Numbersub-1=décimales séparées par un point (4.8 ≠ <s>4,8</s>)
-Numbersub-2=sans unité (175 ≠ 175cm)
-Numbersub-3=sans séparateur de milliers (30000 ≠ 30 000 ou 30,000)
+Numbersub-2=sans unité (175 ≠ <s>175cm</s>)
+Numbersub-3=sans séparateur de milliers (30000 ≠ <s>30 000 ou 30,000</s>)
 EncodeCharsSubTitle=Encodage du jeu de caractères
 EncodeCharsSubTitle-2=À sélectionner dans la liste déroulante. Choisir le bon encodage évite les erreurs sur les caractères accentués.<br> Si le logiciel qui génère le fichier CSV vous le permet, choisissez l’encodage <span class="character">UTF-8</span> lors de l’export en CSV.
 FieldSeparatorsubTitle=<b>Séparateur de champs</b> :virgule (<span class="character">,</span>)
