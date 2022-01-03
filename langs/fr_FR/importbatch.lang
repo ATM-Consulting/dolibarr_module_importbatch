@@ -66,7 +66,7 @@ RefWarehouseDefaultNotExistError=Ligne %s : La référence entrepôt <b>%s</b> n
 RefWarehouseNotExistError=Ligne %s : La référence entrepôt <b>%s</b>.
 RefProductdefaultWarehouseNotExistError=Ligne %s : L'entrepôt du produit %s ayant pour id %s n'existe pas
 
-NumberExpectedError =Ligne %s : La Quantité <b>%s</b> n'est pas un numérique valide ou est inférieure à un.
+NumberExpectedError =Ligne %s : La Quantité <b>%s</b> n'est pas un numérique valide.
 NumberEmptyError=Ligne %s : La Quantité <b>%s</b> est vide.
 
 
@@ -102,10 +102,10 @@ Columns=Colonnes
 refProdColumDesc=Doit être la référence d'un produit enregistré dans Dolibarr. les services ne sont pas pris en compte.
 refWarehouseColumDesc=Référence de l'entrepôt dans Dolibarr :la colonne doit contenir une référence entrepôt valide <br>option : <br>  Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité, si la colonne n'est pas renseignée, d'affecter l'entrepôt par défaut du produit s'il est renseigné dans la fiche de ce dernier. Cette <b>option est disponible dans les paramètres du module via Accueil</b>, configuration, modules/applications.<br>
 refQtyColumDesc=Quantité désirée pour un lot/série.
-refQtyColumDescv14=Pour un numéro de série il sera obligatoire de renseigner la quantité à 1.<br>option : <br> Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité de ne pas renseigner la quantité pour qu'elle soit affectée automatiquement pendant le traitement si les conditions suivantes sont remplies : <br> - Le produit doit être du type sérialisé (vérifiez le type via la fiche produit)
+refQtyColumDescv14=Pour un numéro de série il sera obligatoire de renseigner la quantité à 1.<br>option : <br>
 
-refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé<br>
-refBatchColumDescV14=Pour les numéros de série, la valeur de ce champ doit être unique.
+refBatchColumDesc=Numéro de lot/série à associé au produit. Si le couple produit/lot existe il sera mis à jour sinon il sera créé<br>Pour les numéros de série, la valeur de ce champ doit être unique.
+refBatchColumDescV14=Le module <b>IMPORT DES NUMÉRO DE LOTS/SERIE</b> donne la possibilité de ne pas renseigner la quantité pour qu'elle soit affectée automatiquement pendant le traitement si les conditions suivantes sont remplies : <br> - Le produit doit être du type sérialisé (vérifiez le type via la fiche produit)
 
 
 refProductTitle= Ref Produit
@@ -131,6 +131,6 @@ refproduct=Référence produit
 refwarehouse=Référence entrepôt
 batch=lot/série
 qty=Quantité
-excludeline=Importer les lignes à la position (de - à)
+startLine=Importer les lignes à la position (de - à)
 SetThisValueTo2ToExcludeFirstLine=Par exemple, fixez cette valeur à 3 pour exclure les 2 premières lignes.<br>Si les lignes d'en-tête ne sont pas exclues, cela donnera lieu à de multiples erreurs dans la Simulation d'Import
 KeepEmptyToGoToEndOfFile=Laissez ce champ vide pour aller jusqu'à la fin du fichier

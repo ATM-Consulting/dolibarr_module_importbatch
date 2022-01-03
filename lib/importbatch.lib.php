@@ -29,7 +29,7 @@ require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
  * @param string $importKey
  * @return array|null  Array with
  */
-function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot',$excludeline,$endatlinenb = 0 ) {
+function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $importKey='ecImportBatchLot',$startLine,$endLine = 0 ) {
 
 	/*
 	Import / lot série (création et mise à jour des stocks et mouvements).
@@ -56,8 +56,8 @@ function ibGetBatchSerialFromCSV($db, $filePath, $srcEncoding = 'latin1', $impor
 		$TcsvLine = $csvValues;
 		if (empty(implode('', $csvValues))) continue;
 
-		if ($i < $excludeline) continue; // skip headers rows
-		if ($endatlinenb > 0 && $i > $endatlinenb ) continue; // skip footers rows
+		if ($i < $startLine) continue; // skip headers rows
+		if ($endLine > 0 && $i > $endLine ) continue; // skip footers rows
 
 		try {
 			$objProduct = ibValidateCSVLine($i, $TcsvLine);

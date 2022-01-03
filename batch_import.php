@@ -28,8 +28,8 @@ $action = GETPOST('action');
 switch ($action) {
 	case 'importCSV':
 		$filename = GETPOST('CSVF$actionile', 'alpha');
-		$excludeline = GETPOST('excludeline','int');
-		$endatlinenb = GETPOST('endatlinenb','int');
+		$startLine = GETPOST('startLine','int');
+		$endline = GETPOST('endline','int');
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
 			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
@@ -37,8 +37,8 @@ switch ($action) {
 				$filePath,
 				GETPOST('srcEncoding', 'alpha'),
 				'ib' . date('Ymd'),
-				$excludeline,
-				$endatlinenb
+				$startLine,
+				$endline
 			);
 
 			if (count(array_filter($_SESSION['TLog'], function ($logLine) { return $logLine['type'] === 'error'; }))) {
@@ -116,11 +116,11 @@ function showImportForm($form) {
 
 		<?php
 
-			$startLine = GETPOSTISSET('excludeline') ? GETPOST('excludeline','int') : 3;
-			print $langs->trans('excludeline');
-			print '<input type="number" class="maxwidth50" name="excludeline" value="'.$startLine.'">-' ;
+			$startLine = GETPOSTISSET('startLine') ? GETPOST('startLine','int') : 2;
+			print $langs->trans('startLine');
+			print '<input type="number" class="maxwidth50" name="startLine" value="'.$startLine.'">-' ;
 			print $form->textwithpicto("", $langs->trans("SetThisValueTo2ToExcludeFirstLine"));
-			print '<input type="number" class="maxwidth50" name="endatlinenb" value='.GETPOST('endatlinenb','int').'>';
+			print '<input type="number" class="maxwidth50" name="endline" value='.GETPOST('endline','int').'>';
 		    print $form->textwithpicto("", $langs->trans("KeepEmptyToGoToEndOfFile"));
 		?>
 
