@@ -134,3 +134,5 @@ qty=Quantité
 startLine=Importer les lignes à la position (de - à)
 SetThisValueTo2ToExcludeFirstLine=Par exemple, fixez cette valeur à 3 pour exclure les 2 premières lignes.<br>Si les lignes d'en-tête ne sont pas exclues, cela donnera lieu à de multiples erreurs dans la Simulation d'Import
 KeepEmptyToGoToEndOfFile=Laissez ce champ vide pour aller jusqu'à la fin du fichier
+startmustbeInferior=Le numéro de début de ligne ne doit pas être supérieur à celui de fin
+startafterendOffileLine=Le numéro de début de ligne ne doit pas être supérieur à la somme des lignes du fichier
