@@ -70,7 +70,7 @@ NumberExpectedError =Ligne %s : La Quantité <b>%s</b> n'est pas un numérique v
 NumberEmptyError=Ligne %s : La Quantité <b>%s</b> est vide.
 
 
-outNumberedForSerialError=Ligne %s : Le produit de la ligne est sérialisé. La qty <b>%s</b> pour cette ligne doit être égale à 1.
+outNumberedForSerialError=Ligne %s : Le produit de la ligne est sérialisé. La quantité <b>%s</b> pour cette ligne doit être égale à 1.
 ProductSerialAlreadyExistError=Ligne %s : Le numero de série <b>%s</b> existe déjà dans la base de données.
 duplicateSerialOnimportedFile= Le fichier contient des Duplications de numéro de serie sur des produits sérialisés.<br> Détails  des numéros de série :<br>  <b>%s</b>
 
@@ -83,15 +83,15 @@ addStockFromBatchSerial=Augmentation du stock par import lots/séries
 isEmpty=est vide
 notFound=n'a pas été trouvée
 
-CSVBatchSerialCreateSuccess=Ligne %s : Le lot/serie <b>%s</b> pour le [ produit | entrepôt ] <b>%s</b> et Pour une qty de <b>%s</b>  a été ajouté en base de données
+CSVBatchSerialCreateSuccess=Ligne %s : Le lot/serie <b>%s</b> pour le [ produit | entrepôt ] <b>%s</b> et Pour une quantité de <b>%s</b>  a été ajouté en base de données
 
 #
 # admin
 #
 SET_WAREHOUSE_DEFAULT_PRODUCT_ON_EMPTY_WAREHOUSE_COLUMN=Allocation entrepôt par defaut
 SET_WAREHOUSE_DEFAULT_PRODUCT_ON_EMPTY_WAREHOUSE_COLUMNTooltip=Donner la possibilité dans l'import de lots/Séries d'affecter l'entrepôt d'un produit,s'il est attribué, lorsque la colonne entrepôt de la ligne n'est pas renseignée.
-ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCT=colonne qty vide sur produit sérialisé
-ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCTTooltip=Donner la possibilité d'affecter  dans l'import de lots/séries une quantité automatique à 1 pour les produits serialisés lorsque colonne  la qty n'est pas renseignée (prise en compte à partir de la version 14 de dolibarr).
+ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCT=colonne quantité vide sur produit sérialisé
+ALLOW_EMPTY_QTY_COLUMN_ON_TYPE_SERIAL_PRODUCTTooltip=Donner la possibilité d'affecter  dans l'import de lots/séries une quantité automatique à 1 pour les produits serialisés lorsque colonne  la quantité n'est pas renseignée (prise en compte à partir de la version 14 de dolibarr).
 
 #
 # description product_import.php
