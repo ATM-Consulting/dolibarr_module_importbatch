@@ -25,8 +25,8 @@ $langs->load('importbatch@importbatch');
 
 $action = GETPOST('action');
 
-$startLine 		= (GETPOST('startLine','int') ? GETPOST('startLine','int') : 2);
-$endline		= (GETPOST('endline','int') ? GETPOST('endline','int') : '');
+$startLine 		= GETPOSTISSET('startLine','int') ? GETPOST('startLine','int') : 2;
+$endline		= GETPOSTISSET('endline','int') ? GETPOST('endline','int') : '';
 
 // a cause de la redirection qui previent le ctrl+r on doit mémoriser les vars
 // et les substituer le cas échéant
