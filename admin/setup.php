@@ -74,13 +74,6 @@ $label = GETPOST('label', 'alpha');
 $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
-//'IMPORTBATCH_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
-//'IMPORTBATCH_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
-//'IMPORTBATCH_MYPARAM5'=>array('type'=>'yesno', 'enabled'=>1),
-//'IMPORTBATCH_MYPARAM5'=>array('type'=>'thirdparty_type', 'enabled'=>1),
-//'IMPORTBATCH_MYPARAM6'=>array('type'=>'securekey', 'enabled'=>1),
-//'IMPORTBATCH_MYPARAM7'=>array('type'=>'product', 'enabled'=>1),
-
 
 $arrayofparameters = array('SET_WAREHOUSE_DEFAULT_PRODUCT_ON_EMPTY_WAREHOUSE_COLUMN'=>array('type'=>'yesno','enabled'=>1),);
 
