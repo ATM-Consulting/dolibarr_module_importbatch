@@ -46,11 +46,8 @@ switch ($action) {
 			} else {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('importDone').'</h2></summary>';
 			}
-
 			$lineNumber = 1;
-
-
-			header('Location: '.$_SERVER['PHP_SELF']);
+			header('Location: '.$_SERVER['PHP_SELF']."?startLine=".$startLine."&endline=".$endline);
 			exit;
 
 		}
