@@ -25,11 +25,21 @@ $langs->load('importbatch@importbatch');
 
 $action = GETPOST('action');
 
+$startLine 		= (GETPOST('startLine','int') ? GETPOST('startLine','int') : 2);
+$endline		= (GETPOST('endline','int') ? GETPOST('endline','int') : '');
+
+// a cause de la redirection qui previent le ctrl+r on doit mémoriser les vars
+// et les substituer le cas échéant
+if (isset($_SESSION['startLine']) && isset($_SESSION['endline'])){
+	$startLine = $_SESSION['startLine'];
+	$endline = $_SESSION['endline'];
+}
+
 switch ($action) {
 	case 'importCSV':
+
 		$filename = GETPOST('CSVF$actionile', 'alpha');
-		$startLine = GETPOST('startLine','int');
-		$endline = GETPOST('endline','int');
+
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
 			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
@@ -40,14 +50,18 @@ switch ($action) {
 				$startLine,
 				$endline
 			);
-
 			if (count(array_filter($_SESSION['TLog'], function ($logLine) { return $logLine['type'] === 'error'; }))) {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('Errors').'</h2></summary>';
+
 			} else {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('importDone').'</h2></summary>';
 			}
 			$lineNumber = 1;
-			header('Location: '.$_SERVER['PHP_SELF']."?startLine=".$startLine."&endline=".$endline);
+
+
+			$_SESSION['startLine'] = $startLine;
+			$_SESSION['endline'] = $endline;
+			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 
 		}
@@ -67,7 +81,7 @@ switch ($action) {
 			unset($_SESSION['TLog']);
 		}
 
-		showImportForm($form);
+		showImportForm($form,$startLine,$endline);
 		showHelp();
 }
 // todo: mettre dans fonction show_form_create()
@@ -76,7 +90,7 @@ llxFooter();
 
 
 
-function showImportForm($form) {
+function showImportForm($form,$startline,$endline) {
 	global $langs;
 
 	$acceptedEncodings = array(
@@ -113,18 +127,21 @@ function showImportForm($form) {
 
 		<?php
 
-			$startLine = GETPOSTISSET('startLine') ? GETPOST('startLine','int') : 2;
 			print $langs->trans('startLine');
-			print '<input type="number" class="maxwidth50" name="startLine" value="'.$startLine.'">-' ;
+			print '<input type="number" class="maxwidth50" name="startLine" value="'.$startline.'">-' ;
 			print $form->textwithpicto("", $langs->trans("SetThisValueTo2ToExcludeFirstLine"));
-			print '<input type="number" class="maxwidth50" name="endline" value='.GETPOST('endline','int').'>';
+			print '<input type="number" class="maxwidth50" name="endline" value="'.$endline.'">';
 		    print $form->textwithpicto("", $langs->trans("KeepEmptyToGoToEndOfFile"));
+			unset($_SESSION['StartLine']);
+			unset($_SESSION['endline']);
 		?>
 
 
 		<br/>
 		<br/>
 		<input type="submit" class="button" name="save" value="<?php echo $langs->trans("SubmitCSVForImport") ?>" />
+
+
 	</form>
 	<?php
 }
