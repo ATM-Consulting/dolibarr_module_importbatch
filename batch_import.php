@@ -28,6 +28,7 @@ $action = GETPOST('action');
 $startLine 		= GETPOSTISSET('startLine','int') ? GETPOST('startLine','int') : 2;
 $endline		= GETPOSTISSET('endline','int') ? GETPOST('endline','int') : '';
 
+
 // a cause de la redirection qui previent le ctrl+r on doit mémoriser les vars
 // et les substituer le cas échéant
 if (isset($_SESSION['startLine']) && isset($_SESSION['endline'])){
@@ -58,9 +59,18 @@ switch ($action) {
 			}
 			$lineNumber = 1;
 
-
+			$linecount = count(file($filePath));
 			$_SESSION['startLine'] = $startLine;
 			$_SESSION['endline'] = $endline;
+
+			if (( $startLine > $endline && $endline > 0 ) ){
+				setEventMessage($langs->trans("startmustbeInferior","errors"));
+			}
+
+			if ( $startLine > $linecount ){
+				setEventMessage($langs->trans("startafterendOffileLine","errors"));
+			}
+
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 
