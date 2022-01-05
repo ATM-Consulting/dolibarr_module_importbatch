@@ -25,26 +25,51 @@ $langs->load('importbatch@importbatch');
 
 $action = GETPOST('action');
 
+$startLine 		= GETPOSTISSET('startLine','int') ? GETPOST('startLine','int') : 2;
+$endline		= GETPOSTISSET('endline','int') ? GETPOST('endline','int') : '';
+
+
+// a cause de la redirection qui previent le ctrl+r on doit mémoriser les vars
+// et les substituer le cas échéant
+if (isset($_SESSION['startLine']) && isset($_SESSION['endline'])){
+	$startLine = $_SESSION['startLine'];
+	$endline = $_SESSION['endline'];
+}
+
 switch ($action) {
 	case 'importCSV':
+
 		$filename = GETPOST('CSVF$actionile', 'alpha');
+
 		if (isset($_FILES['CSVFile'])) {
 			$filePath = $_FILES['CSVFile']['tmp_name'];
 			$_SESSION['TLog'] = ibGetBatchSerialFromCSV(
 				$db,
 				$filePath,
 				GETPOST('srcEncoding', 'alpha'),
-				'ib' . date('Ymd')
+				'ib' . date('Ymd'),
+				$startLine,
+				$endline
 			);
-
 			if (count(array_filter($_SESSION['TLog'], function ($logLine) { return $logLine['type'] === 'error'; }))) {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('Errors').'</h2></summary>';
+
 			} else {
 				echo '<details open class="ib"><summary><h2>'. $langs->trans('importDone').'</h2></summary>';
 			}
-
 			$lineNumber = 1;
 
+			$linecount = count(file($filePath));
+			$_SESSION['startLine'] = $startLine;
+			$_SESSION['endline'] = $endline;
+
+			if (( $startLine > $endline && $endline > 0 ) ){
+				setEventMessage($langs->trans("startmustbeInferior","errors"));
+			}
+
+			if ( $startLine > $linecount ){
+				setEventMessage($langs->trans("startafterendOffileLine","errors"));
+			}
 
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
@@ -66,7 +91,7 @@ switch ($action) {
 			unset($_SESSION['TLog']);
 		}
 
-		showImportForm();
+		showImportForm($form,$startLine,$endline);
 		showHelp();
 }
 // todo: mettre dans fonction show_form_create()
@@ -75,8 +100,9 @@ llxFooter();
 
 
 
-function showImportForm() {
+function showImportForm($form,$startline,$endline) {
 	global $langs;
+
 	$acceptedEncodings = array(
 		'UTF-8',
 		'latin1',
@@ -93,7 +119,7 @@ function showImportForm() {
 		<input type="hidden" name="token" value="<?php echo newToken() ?>" />
 
 		<input id="CSVFile" name="CSVFile" type="file" required />
-
+		<br/>
 		<br/>
 		<label for="srcEncoding">
 			<?php print $langs->trans('SelectFileEncoding'); ?>
@@ -106,7 +132,26 @@ function showImportForm() {
 			?>
 		</select>
 		<br/>
+		<br />
+		<label for="excludefirstline">
+
+		<?php
+
+			print $langs->trans('startLine');
+			print '<input type="number" class="maxwidth50" name="startLine" value="'.$startline.'">-' ;
+			print $form->textwithpicto("", $langs->trans("SetThisValueTo2ToExcludeFirstLine"));
+			print '<input type="number" class="maxwidth50" name="endline" value="'.$endline.'">';
+		    print $form->textwithpicto("", $langs->trans("KeepEmptyToGoToEndOfFile"));
+			unset($_SESSION['StartLine']);
+			unset($_SESSION['endline']);
+		?>
+
+
+		<br/>
+		<br/>
 		<input type="submit" class="button" name="save" value="<?php echo $langs->trans("SubmitCSVForImport") ?>" />
+
+
 	</form>
 	<?php
 }
@@ -137,10 +182,25 @@ function showHelp() {
 				<td><?php print $langs->trans("refWarehouseColumDesc"); ?></td>
 			</tr>
 			<tr><th><?php print $langs->trans("refQtyTitle"); ?></th>
-				<td><?php print $langs->trans("refQtyColumDesc"); ?></td>
+				<td>
+					<?php print $langs->trans("refQtyColumDesc"); ?>
+					<?php
+						if (version_compare(DOL_VERSION, '14.0', '>=')) {
+							print $langs->trans("refQtyColumDescv14");
+						}
+					?>
+				</td>
 			</tr>
 			<tr><th><?php print $langs->trans("refBatchTitle"); ?></th>
-				<td><?php print $langs->trans("refBatchColumDesc"); ?></td>
+				<td><?php print $langs->trans("refBatchColumDesc"); ?>
+					<?php
+					if (version_compare(DOL_VERSION, '14.0', '>=')) {
+						print $langs->trans("refBatchColumDescV14");
+					}
+					?>
+
+				</td>
+
 			</tr>
 		</table>
 		<h3><?php print $langs->trans("TechDescCsvTitle"); ?></h3>
