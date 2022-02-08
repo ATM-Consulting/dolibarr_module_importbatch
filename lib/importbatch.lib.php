@@ -452,9 +452,9 @@ function validateDuplicateSerial($TLineValidated){
 	if (!$obj->result){
 		$msg ="";
 		foreach ($obj->arr as $key => $a){
-			$msg = $key . " : ".$a ." unités  " ;
+			$msg .= $key . " : ".$a ." unités  <br>" ;
 		}
-		throw new ErrorException($langs->trans('duplicateSerialOnimportedFile',$msg));
+		throw new ErrorException($langs->transnoentities('duplicateSerialOnimportedFile',$msg));
 	}
 
 }
